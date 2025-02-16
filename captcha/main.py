@@ -72,9 +72,12 @@ def prepare_image(img):
     return x
 
 def predict_image(encoded_image: str):
-    encoded_image.replace('', '+');
+    encoded_image.replace('', '+')
     image = imageio.v2.imread(io.BytesIO(base64.b64decode(encoded_image)))
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+    # preprocess the image and prepare it for classification
+    image = prepare_image(image)
 
     preds = model.predict(image)
     pred_texts = decode_batch_predictions(preds)

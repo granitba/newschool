@@ -10,7 +10,7 @@
     "get_time": "16:00:00",
     "num_process_per_core": 1,
     "num_passports": 4,
-    "log_server_ip" : "188.245.39.17",
+    "log_server_ip" : "138.199.200.248",
     "log_server_port" : "12201",
     "delay_captcha": 3.78,
     "delay_form": 3.28

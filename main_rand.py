@@ -164,8 +164,11 @@ def wait_process(target_time_str):
 # Function to wait until a specific time (hour, minute, second)
 def wait_until_specific_time(target_time_str, queue):
     target_time = datetime.strptime(target_time_str, "%H:%M:%S").time()
-    log_interval = 20
+    log_interval = 80
     i = 0
+
+    # load captcha model
+    load_model()
 
     while datetime.now().time() < target_time:
         print(f"Po pret kohen e caktume {target_time}. Koha e tanishme: {datetime.now().time()}")
@@ -185,7 +188,6 @@ def wait_until_specific_time(target_time_str, queue):
 def solve_captcha(image_base64, session, queue):
     """Solve CAPTCHA using the custom service and log events."""
 
-    load_model()
     encoded_image = urllib.parse.quote(image_base64)
     result = predict_image(image_base64)
     queue.put({
@@ -539,6 +541,9 @@ def process_show_form(session, show_form_url, passport_json_file, queue, get_tim
 
 # Function to process a single passport
 def process_single_passport(passport_json_file, queue, post_time=None, get_time=None):
+    # Load captcha model and wait for time
+    wait_until_specific_time(post_time, queue)
+
     """Process a single passport and log messages to the queue."""
     try:
         session = requests.Session(impersonate='chrome124')
@@ -625,6 +630,7 @@ def run_multiprocessing(post_time=None, get_time=None):
     passport_target_files = random.choices(passport_files, k=process_target_num)
     print(f"Starting with {len(passport_target_files)} processes on system with {mp.cpu_count()} cores for passports: {passport_target_files}",)
 
+
     with mp.Manager() as manager:
         queue = manager.Queue()
         print(f"Initial queue size: {queue.qsize()}")
@@ -639,8 +645,6 @@ def run_multiprocessing(post_time=None, get_time=None):
             "message": f"Using {random_config}, starting with {num_processes} processes on system with {mp.cpu_count()} cores for passports: {passport_target_files}",
             "timestamp": time.time()
         })
-
-        wait_until_specific_time(post_time, queue)
 
         try:
             with Pool(num_processes) as pool:
