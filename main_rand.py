@@ -16,7 +16,7 @@ from captcha import main
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 
-from captcha.main import predict_image
+from captcha.main import predict_image, load_model
 
 # Load random config_mine.json
 random_config = random.choice(os.listdir('configs'))
@@ -185,13 +185,15 @@ def wait_until_specific_time(target_time_str, queue):
 def solve_captcha(image_base64, session, queue):
     """Solve CAPTCHA using the custom service and log events."""
 
+    load_model()
     encoded_image = urllib.parse.quote(image_base64)
-    result = predict_image(encoded_image)
+    result = predict_image(image_base64)
     queue.put({
         "level": "INFO",
         "message": f"CAPTCHA successfully solved. Result: {result}",
         "timestamp": time.time()
     })
+    print(f"Captcha solved successfully: {result}")
     return result
 
     # # Use IP and port from config_mine.json

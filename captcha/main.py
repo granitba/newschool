@@ -50,7 +50,7 @@ def load_model():
     # pre-trained on ImageNet and provided by Keras, but you can
     # substitute in your own networks just as easily)
     global model
-    mod = tf.keras.models.load_model('saved_model/my_model')
+    mod = tf.keras.models.load_model('captcha/saved_model/my_model')
     model = keras.models.Model(mod.get_layer(name='input_data').input, mod.get_layer(name='dense2').output)
 
 
@@ -72,26 +72,11 @@ def prepare_image(img):
     return x
 
 def predict_image(encoded_image: str):
-    """
-    Process the base64-encoded image and return the OCR prediction.
-    """
-    # Replace spaces with plus signs if needed
-    encoded_image = encoded_image.replace(' ', '+')
-
-    # Decode the image from base64 to bytes
-    image_bytes = base64.b64decode(encoded_image)
-    image = imageio.v2.imread(io.BytesIO(image_bytes))
-
-    # Convert color from RGB to BGR (if necessary for your processing)
+    encoded_image.replace('', '+');
+    image = imageio.v2.imread(io.BytesIO(base64.b64decode(encoded_image)))
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-    # Preprocess the image
-    image = prepare_image(image)
-
-    # Generate predictions using the pre-loaded model
     preds = model.predict(image)
-
-    # Decode the predictions to human-readable text
     pred_texts = decode_batch_predictions(preds)
 
     return pred_texts
