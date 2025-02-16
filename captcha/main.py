@@ -3,6 +3,11 @@ from PIL import Image
 import numpy as np
 import flask
 import io
+import os
+
+# Disable TENSORFLOW WARNINGS
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 import tensorflow as tf
 from tensorflow import keras
 import cv2
