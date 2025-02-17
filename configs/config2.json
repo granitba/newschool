@@ -1,17 +1,17 @@
 {
-    "showForm_url": "https://service2.diplo.de/rktermin/extern/appointment_showForm.do?locationCode=kara&realmId=967&categoryId=2801&dateStr=17.03.2025&openingPeriodId=68490",
+    "showForm_url": "https://service2.diplo.de/rktermin/extern/appointment_showForm.do?locationCode=kara&realmId=967&categoryId=2801&dateStr=18.03.2025&openingPeriodId=68491",
     "showForm_url_post": "https://service2.diplo.de/rktermin/extern/appointment_showForm.do",
-    "openingPeriodId": "68490",
-    "date": "17.03.2025",
-    "dateStr": "17.03.2025",
-    "captcha_ip": "213.173.111.88",
-    "captcha_port": "27816",
-    "post_time": "22:59:40",
+    "openingPeriodId": "68491",
+    "date": "18.03.2025",
+    "dateStr": "18.03.2025",
+    "captcha_ip": "213.173.111.73",
+    "captcha_port": "59908",
+    "post_time": "22:59:25",
     "get_time": "23:00:00",
     "num_process_per_core": 1,
     "num_passports": 4,
-    "log_server_ip" : "138.199.200.248",
+    "log_server_ip" : "49.12.220.130",
     "log_server_port" : "12201",
     "delay_captcha": 3.78,
-    "delay_form": 3.28
+    "delay_form": 3.78
 }
